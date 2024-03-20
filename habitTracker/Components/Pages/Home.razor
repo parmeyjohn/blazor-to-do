@@ -1,0 +1,46 @@
+﻿@page "/"
+@using System.Linq
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@{// implement completed list as a stack, once done for the day, pop onto stack
+}
+
+<h2>To Do:</h2>
+<div class="d-flex flex-column w-50">
+    @foreach (var todo in todoList)
+    {
+        <button @onclick="@(e => @completeItem(@todo))" class="d-flex w-100 rounded-2 p-8">@todo.Title</button>
+    }
+</div>
+
+<h2>Completed:</h2>
+<div class="d-flex flex-column w-50">
+    @if (completedList.Count > 0) {
+        foreach (var todo in completedList)
+        {
+            <button class="d-flex w-100 rounded-2 p-8">@todo.Title</button>
+        }
+    } else {
+        <h3>Complete some tasks</h3>
+    }
+</div>
+
+
+
+@code {
+    public void completeItem(TodoItem item)
+    {
+        todoList.Remove(item);
+        completedList.Add(item);
+    }
+
+    List<TodoItem> todoList = new List<TodoItem>() { new TodoItem("task1"), new TodoItem("task2") };
+    List<TodoItem> completedList = new List<TodoItem>() { };
+    
+}
