@@ -2,14 +2,14 @@
 @using System.Linq
 @rendermode InteractiveServer
 
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
 
 @{// implement completed list as a stack, once done for the day, pop onto stack
 }
+<h2>Add new task:</h2>
+<div class="d-flex">
+    <InputText @bind-Value="newTaskTitle" class="w-25"></InputText>
+    <button @onclick="addItem">Add task</button>
+</div>
 
 <h2>To Do:</h2>
 <div class="d-flex flex-column w-50">
@@ -40,6 +40,11 @@ Welcome to your new app.
         completedList.Add(item);
     }
 
+    public void addItem()
+    {
+        todoList.Add(new TodoItem(newTaskTitle));
+    }
+    private string newTaskTitle = "";
     List<TodoItem> todoList = new List<TodoItem>() { new TodoItem("task1"), new TodoItem("task2") };
     List<TodoItem> completedList = new List<TodoItem>() { };
     
