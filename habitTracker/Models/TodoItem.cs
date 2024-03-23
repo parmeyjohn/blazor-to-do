@@ -2,15 +2,17 @@
 
 public class TodoItem
 {
-    public TodoItem(string title)
+    public TodoItem(string title, int habitLength)
     {
         Title = title;
-        IsCompleted = false;
         IsPrivate = false;
+        HabitLength = habitLength;
+        CreationTime = DateTime.Now;
     }
 
     public string Title { get; set; }
-    public bool IsCompleted { get; set; }
     private bool IsPrivate { get; set; }
+    private DateTime CreationTime { get; set; }
+    public int HabitLength {  get; set; }
 
 }

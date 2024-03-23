@@ -7,7 +7,20 @@
 }
 <h2>Add new task:</h2>
 <div class="d-flex">
-    <InputText @bind-Value="newTaskTitle" class="w-25"></InputText>
+    <div class="d-flex flex-column w-25">
+        <label> Habit Name:</label>
+        <InputText @bind-Value="newTaskTitle" class="p-2"></InputText>
+    </div>
+    <div class="d-flex flex-column">
+        <label> Habit Length:</label>
+        <div class="d-flex">
+            <button @onclick="decreaseLength"> - </button>
+            <InputNumber @bind-Value="newTaskLength" class="w-25 mx-2"></InputNumber>
+            <span class="w-25 p-2">days</span>
+            <button @onclick="increaseLength"> + </button>
+        </div>
+    </div>
+
     <button @onclick="addItem">Add task</button>
 </div>
 
@@ -15,7 +28,7 @@
 <div class="d-flex flex-column w-50">
     @foreach (var todo in todoList)
     {
-        <button @onclick="@(e => @completeItem(@todo))" class="d-flex w-100 rounded-2 p-8">@todo.Title</button>
+        <button @onclick="@(e => @completeItem(@todo))" class="d-flex w-100 rounded-2 p-8">@todo.Title @todo.HabitLength</button>
     }
 </div>
 
@@ -38,14 +51,32 @@
     {
         todoList.Remove(item);
         completedList.Add(item);
+        // Update db with changes
     }
 
     public void addItem()
     {
-        todoList.Add(new TodoItem(newTaskTitle));
+        todoList.Add(new TodoItem(newTaskTitle, newTaskLength));
     }
+
+    public void decreaseLength()
+    {
+        if (newTaskLength > 1)
+        {
+            newTaskLength -= 1;
+        }
+    }
+
+    public void increaseLength()
+    {
+        newTaskLength += 1;
+    }
+
+
     private string newTaskTitle = "";
-    List<TodoItem> todoList = new List<TodoItem>() { new TodoItem("task1"), new TodoItem("task2") };
+    private int newTaskLength = 1;
+    // Load initial values from DB here
+    List<TodoItem> todoList = new List<TodoItem>() { new TodoItem("task1", 1), new TodoItem("task2", 1) };
     List<TodoItem> completedList = new List<TodoItem>() { };
     
 }
