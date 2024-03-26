@@ -5,6 +5,12 @@
 
 @{// implement completed list as a stack, once done for the day, pop onto stack
 }
+<div class="d-flex justify-content-between">
+    <button>L</button>
+    <h2>Today</h2>
+    <button>R</button>
+</div>
+
 <h2>Add new task:</h2>
 <div class="d-flex">
     <div class="d-flex flex-column w-25">
@@ -26,9 +32,15 @@
 
 <h2>To Do:</h2>
 <div class="d-flex flex-column w-50">
-    @foreach (var todo in todoList)
+    @if (todoList.Count > 0) {
+        @foreach (var todo in todoList)
+        {
+            <button @onclick="@(e => @completeItem(@todo))" class="d-flex w-100 rounded-2 p-8">@todo.Title @todo.HabitLength</button>
+        }
+    }
+    else
     {
-        <button @onclick="@(e => @completeItem(@todo))" class="d-flex w-100 rounded-2 p-8">@todo.Title @todo.HabitLength</button>
+        <h3>You completed all your habits!</h3>
     }
 </div>
 
